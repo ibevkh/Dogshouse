@@ -1,6 +1,8 @@
 
+using Dogshouse.AppUnitOfWork;
 using Dogshouse.Context;
 using Dogshouse.Extensions;
+using Dogshouse.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dogshouse
@@ -21,6 +23,10 @@ namespace Dogshouse
 
             // ---------- DATABASE SEEDER ----------
             builder.Services.AddScoped<DbSeeder>();
+
+            //----------- REPOSITPRY + UNIT OF WORK -------------
+            builder.Services.AddScoped<DogRepository>();
+            builder.Services.AddScoped<DogUnitOfWork>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
