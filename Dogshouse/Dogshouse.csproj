@@ -4,6 +4,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+
+	  <!-- Версія програми -->
+	  <Version>1.0.1</Version>
+	  <FileVersion>1.0.1.0</FileVersion>
+	  <AssemblyVersion>1.0.1.0</AssemblyVersion>
+	  <InformationalVersion>Dogshouseservice.Version1.0.1</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>

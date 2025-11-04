@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace Dogshouse.Controllers;
 
@@ -10,6 +11,7 @@ public class PingController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok("Dogshouseservice.Version1.0.1");
+        var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.1";
+        return Ok($"Dogshouseservice.Version{version}");
     }
 }
