@@ -3,6 +3,7 @@ using Dogshouse.AppUnitOfWork;
 using Dogshouse.Context;
 using Dogshouse.Extensions;
 using Dogshouse.Mapping;
+using Dogshouse.Middleware;
 using Dogshouse.Repositories;
 using Dogshouse.Services;
 using Dogshouse.Services.Contracts;
@@ -50,6 +51,9 @@ namespace Dogshouse
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            // ---------- MIDDLEWARE ----------
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseAuthorization();
 
