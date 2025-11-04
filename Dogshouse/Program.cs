@@ -1,10 +1,12 @@
 
 using Dogshouse.AppUnitOfWork;
+using Dogshouse.AppUnitOfWork.Contracts;
 using Dogshouse.Context;
 using Dogshouse.Extensions;
 using Dogshouse.Mapping;
 using Dogshouse.Middleware;
 using Dogshouse.Repositories;
+using Dogshouse.Repositories.Contracts;
 using Dogshouse.Services;
 using Dogshouse.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,7 @@ namespace Dogshouse
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
 
             // ---------- DATABASE ----------
             builder.Services.AddDbContext<DogContext>(opt =>
@@ -31,8 +34,9 @@ namespace Dogshouse
             builder.Services.AddScoped<DbSeeder>();
 
             //--- REPOSITPRY + UNIT OF WORK + SERVICES ---
-            builder.Services.AddScoped<DogRepository>();
-            builder.Services.AddScoped<DogUnitOfWork>();
+
+            builder.Services.AddScoped<IDogRepository, DogRepository>();
+            builder.Services.AddScoped<IDogUnitOfWork, DogUnitOfWork>();
             builder.Services.AddScoped<IDogService, DogService>();
 
             builder.Services.AddControllers();

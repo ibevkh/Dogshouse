@@ -1,17 +1,18 @@
 ﻿using Dogshouse.Context;
 using Dogshouse.Entities;
 using Dogshouse.Models;
+using Dogshouse.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using URF.Core.EF;
 
 namespace Dogshouse.Repositories;
 
-public class DogRepository : Repository<Dog>
+public class DogRepository : Repository<Dog>, IDogRepository
 {
     public DogRepository(DogContext context) : base(context)
     {
     }
-    public async Task<IEnumerable<Dog>> GetAllAsync(QueryParameters parameters)
+    public async virtual Task<IEnumerable<Dog>> GetAllAsync(QueryParameters parameters)
     {
         IQueryable<Dog> query = Queryable();
 
@@ -38,7 +39,7 @@ public class DogRepository : Repository<Dog>
         return await query.ToListAsync();
     }
 
-    public async Task<bool> ExistsByNameAsync(string name)
+    public async virtual Task<bool> ExistsByNameAsync(string name)
     {
         return await Queryable()
              .AnyAsync(d => d.Name.ToLower() == name.ToLower());

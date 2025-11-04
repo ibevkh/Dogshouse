@@ -1,20 +1,22 @@
-﻿using Dogshouse.Context;
+﻿using Dogshouse.AppUnitOfWork.Contracts;
+using Dogshouse.Context;
 using Dogshouse.Repositories;
+using Dogshouse.Repositories.Contracts;
 using URF.Core.EF;
 
 namespace Dogshouse.AppUnitOfWork;
 
-public class DogUnitOfWork : UnitOfWork
+public class DogUnitOfWork : UnitOfWork, IDogUnitOfWork
 {
     private readonly DogContext _context;
-    private DogRepository _dogs;
+    private IDogRepository _dogs;
 
     public DogUnitOfWork(DogContext context) : base(context)
     {
         _context = context;
     }
 
-    public DogRepository Dogs => _dogs ??= new DogRepository(_context);
+    public virtual IDogRepository Dogs => _dogs ??= new DogRepository(_context);
 
     public void Dispose()
     {

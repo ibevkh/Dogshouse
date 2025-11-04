@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Dogshouse.AppUnitOfWork;
+using Dogshouse.AppUnitOfWork.Contracts;
 using Dogshouse.DTOs;
 using Dogshouse.Entities;
 using Dogshouse.Exceptions;
@@ -11,10 +12,10 @@ namespace Dogshouse.Services;
 
 public class DogService : IDogService
 {
-    private readonly DogUnitOfWork _unitOfWork;
+    private readonly IDogUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public DogService(DogUnitOfWork unitOfWork, IMapper mapper)
+    public DogService(IDogUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
