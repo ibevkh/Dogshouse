@@ -1,6 +1,6 @@
-﻿namespace Dogshouse.Enyities;
+﻿namespace Dogshouse.Entities;
 
-public class Dog
+public class Dog : BaseEntity
 {
     public string Name { get; set; }
     public string Color { get; set; }

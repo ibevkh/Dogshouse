@@ -1,13 +1,26 @@
 
+using Dogshouse.Context;
+using Dogshouse.Extensions;
+using Microsoft.EntityFrameworkCore;
+
 namespace Dogshouse
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            // ---------- DATABASE ----------
+            builder.Services.AddDbContext<DogContext>(opt =>
+            {
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+            });
+
+            // ---------- DATABASE SEEDER ----------
+            builder.Services.AddScoped<DbSeeder>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -15,6 +28,8 @@ namespace Dogshouse
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            await app.SeedDatabaseAsync();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

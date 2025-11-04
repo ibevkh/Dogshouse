@@ -1,4 +1,4 @@
-﻿namespace Dogshouse.Enyities;
+﻿namespace Dogshouse.Entities;
 
 public class BaseEntity
 {
