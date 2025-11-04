@@ -8,6 +8,7 @@ using Dogshouse.Repositories;
 using Dogshouse.Services;
 using Dogshouse.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.RateLimiting;
 
 namespace Dogshouse
 {
@@ -16,8 +17,6 @@ namespace Dogshouse
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
 
             // ---------- DATABASE ----------
             builder.Services.AddDbContext<DogContext>(opt =>
@@ -37,6 +36,38 @@ namespace Dogshouse
             builder.Services.AddScoped<IDogService, DogService>();
 
             builder.Services.AddControllers();
+
+            // ---------- CORS ----------
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin()
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                    });
+            });
+
+            // ---------- RATE LIMITING ----------
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                {
+                    var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+                    return RateLimitPartition.GetFixedWindowLimiter(ip, _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10, // 10 запитів
+                        Window = TimeSpan.FromSeconds(1), // на секунду
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                        QueueLimit = 0
+                    });
+                });
+
+                options.RejectionStatusCode = 429;
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -54,9 +85,8 @@ namespace Dogshouse
 
             // ---------- MIDDLEWARE ----------
             app.UseMiddleware<ExceptionHandlingMiddleware>();
-
+            app.UseRateLimiter();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
