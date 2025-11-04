@@ -2,6 +2,7 @@
 using Dogshouse.AppUnitOfWork;
 using Dogshouse.Context;
 using Dogshouse.Extensions;
+using Dogshouse.Mapping;
 using Dogshouse.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,9 @@ namespace Dogshouse
             {
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
             });
+
+            // ---------- AUTOMAPPER ----------
+            builder.Services.AddAutoMapper(typeof(DogMapping));
 
             // ---------- DATABASE SEEDER ----------
             builder.Services.AddScoped<DbSeeder>();
