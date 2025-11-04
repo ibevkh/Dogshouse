@@ -1,4 +1,5 @@
-﻿using Dogshouse.Entities;
+﻿using Dogshouse.Context;
+using Dogshouse.Entities;
 using Dogshouse.Models;
 using Microsoft.EntityFrameworkCore;
 using URF.Core.EF;
@@ -7,7 +8,7 @@ namespace Dogshouse.Repositories;
 
 public class DogRepository : Repository<Dog>
 {
-    public DogRepository(DbContext context) : base(context)
+    public DogRepository(DogContext context) : base(context)
     {
     }
     public async Task<IEnumerable<Dog>> GetAllAsync(QueryParameters parameters)

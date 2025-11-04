@@ -1,4 +1,5 @@
 ﻿using Dogshouse.Context;
+using Dogshouse.Repositories;
 using URF.Core.EF;
 
 namespace Dogshouse.AppUnitOfWork;
