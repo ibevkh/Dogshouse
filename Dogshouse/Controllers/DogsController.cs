@@ -16,8 +16,7 @@ public class DogsController : ControllerBase
         _dogService = dogService;
     }
 
-    //TODO
-    [HttpGet("dogs")] // use [HttpGet()] instead
+    [HttpGet()]
     [ProducesResponseType(typeof(IEnumerable<DogDto>), 200)]
     public async Task<IActionResult> GetAllDogs([FromQuery] QueryParameters parameters)
     {
@@ -25,7 +24,7 @@ public class DogsController : ControllerBase
         return Ok(result.Data);
     }
 
-    [HttpPost("dog")] // use [HttpPost()] instead (4/5) + comment
+    [HttpPost()]
     [ProducesResponseType(typeof(DogDto), 201)]
     public async Task<IActionResult> AddDog([FromBody] CreateDogDto dto)
     {
