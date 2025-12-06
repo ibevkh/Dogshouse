@@ -46,9 +46,8 @@ public class DogServiceTests
         };
 
         var mockDogRepo = new Mock<IDogRepository>();
-        mockDogRepo.Setup(r => r.GetAllAsync(queryParameters)).ReturnsAsync(dogs);
-
-        _mockUnitOfWork.Setup(u => u.Dogs).Returns(mockDogRepo.Object);
+        mockDogRepo.Setup(r => r.GetAllAsync(queryParameters)).ReturnsAsync(dogs); 
+        _mockUnitOfWork.Setup(u => u.Dogs).Returns(mockDogRepo.Object); 
 
         _mockMapper.Setup(m => m.Map<IEnumerable<DogDto>>(dogs)).Returns(dogDtos);
 

@@ -16,16 +16,16 @@ public class DogRepository : Repository<Dog>, IDogRepository
     {
         IQueryable<Dog> query = Queryable();
 
-        if (!string.IsNullOrEmpty(parameters.Attribute))
+        if (!string.IsNullOrEmpty(parameters.Attribute)) 
         {
-            bool desc = parameters.Order?.ToLower() == "desc";
-            query = parameters.Attribute.ToLower() switch
+            bool desc = parameters.Order?.ToLower() == "desc"; 
+            query = parameters.Attribute.ToLower() switch 
             {
-                "name" => desc ? query.OrderByDescending(d => d.Name) : query.OrderBy(d => d.Name),
+                "name" => desc ? query.OrderByDescending(d => d.Name) : query.OrderBy(d => d.Name), 
                 "color" => desc ? query.OrderByDescending(d => d.Color) : query.OrderBy(d => d.Color),
                 "tail_length" => desc ? query.OrderByDescending(d => d.TailLength) : query.OrderBy(d => d.TailLength),
                 "weight" => desc ? query.OrderByDescending(d => d.Weight) : query.OrderBy(d => d.Weight),
-                _ => query
+                _ => query 
             };
         }
 
